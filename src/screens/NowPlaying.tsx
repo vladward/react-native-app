@@ -1,4 +1,4 @@
-import { NowPlayingPropsType, useAppNavigation } from './types';
+import { NowPlayingPropsType, useAppNavigation } from '../types/types';
 import { Button, Text, View } from 'react-native';
 
 export const NowPlaying = ({}: NowPlayingPropsType) => {

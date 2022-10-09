@@ -2,7 +2,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { One } from './One';
 import { Two } from './Two';
 import { Three } from './Three';
-import { NestedMainType } from '../types';
+import { NestedMainType } from '../../types/types';
 
 const Stack = createNativeStackNavigator<NestedMainType>();
 

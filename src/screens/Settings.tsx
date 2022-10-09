@@ -1,4 +1,4 @@
-import { useAppNavigation, SettingsPropsType } from './types';
+import { useAppNavigation, SettingsPropsType } from '../types/types';
 import { Button, Text, View } from 'react-native';
 
 export const Settings = ({ route }: SettingsPropsType) => {

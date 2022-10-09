@@ -1,4 +1,4 @@
-import { RootStack } from './types';
+import { RootStack } from '../types/types';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NowPlaying } from './NowPlaying';
 import { MyWatchlist } from './MyWatchlist';

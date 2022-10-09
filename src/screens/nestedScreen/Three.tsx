@@ -1,5 +1,5 @@
 import { View, Text, Button } from 'react-native';
-import { useAppNavigation } from '../types';
+import { useAppNavigation } from '../../types/types';
 
 export const Three = () => {
   const navigation = useAppNavigation();
