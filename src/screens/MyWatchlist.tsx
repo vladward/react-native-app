@@ -1,10 +1,18 @@
 import { MyWatchlistPropsType, useAppNavigation } from './types';
 import { Button, Text, View } from 'react-native';
+import { THEME } from '../styles/theme';
 
 export const MyWatchlist = ({}: MyWatchlistPropsType) => {
   const navigation = useAppNavigation();
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: THEME.DARK,
+      }}
+    >
       <Text>Details Screen</Text>
       <Button
         title="Jump to Settings"
