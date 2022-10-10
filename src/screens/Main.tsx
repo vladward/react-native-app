@@ -6,6 +6,7 @@ import { Settings } from './Settings';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { THEME } from '../styles/theme';
 import { CONSTANTS } from '../constants';
+import { Platform } from 'react-native';
 
 const Tab = createBottomTabNavigator<RootStack>();
 
@@ -48,7 +49,9 @@ export const Main = () => {
         tabBarInactiveBackgroundColor: THEME.LIGHT_DARK,
         tabBarStyle: {
           backgroundColor: THEME.LIGHT_DARK,
-          height: 70,
+          height: 80,
+          paddingBottom: Platform.OS === 'ios' ? 20 : 10,
+          borderTopWidth: 0,
         },
         tabBarLabelStyle: {
           fontSize: CONSTANTS.TEXT12,
@@ -57,6 +60,8 @@ export const Main = () => {
         title: 'Now Playing',
         headerTintColor: THEME.TEXT,
         headerTitleAlign: 'center',
+        headerShadowVisible: false,
+        headerBackTitleVisible: false,
       })}
       initialRouteName="NowPlaying"
     >
