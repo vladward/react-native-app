@@ -5,3 +5,8 @@ export const CONSTANTS = {
   TEXT14: 14,
   TEXT16: 16,
 };
+
+export const ERROR_MESSAGES = {
+  REQUIRE_FIELD: 'Field is require',
+  INCORRECT_LOGIN_OR_PASSWORD: 'Incorrect Login or Password',
+};
