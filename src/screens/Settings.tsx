@@ -48,7 +48,11 @@ export const Settings = () => {
         {isLoading ? (
           <ActivityIndicator size="large" color={THEME.BLUE} />
         ) : (
-          <Button title="Log out" color={THEME.BLUE} onPress={handleLogout} />
+          <Button
+            title={textTranslate(language, 'Log out', 'Выйти')}
+            color={THEME.BLUE}
+            onPress={handleLogout}
+          />
         )}
       </View>
     </View>
