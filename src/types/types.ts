@@ -2,8 +2,8 @@ import { NavigationProp, NavigatorScreenParams, useNavigation } from '@react-nav
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 export type NestedMainType = {
-  One: undefined;
-  Two: { id: string | number; name: string } | undefined;
+  NowPlayingMovies: undefined;
+  SingleMovie: { id: string | number; name: string } | undefined;
 };
 
 export type RootStack = {
@@ -20,7 +20,7 @@ export type RootStack = {
 export type NowPlayingPropsType = NativeStackScreenProps<RootStack, 'NowPlaying'>;
 export type MyWatchlistPropsType = NativeStackScreenProps<RootStack, 'MyWatchlist'>;
 export type SettingsPropsType = NativeStackScreenProps<RootStack, 'Settings'>;
-export type TwoPropsType = NativeStackScreenProps<NestedMainType, 'Two'>;
+export type TwoPropsType = NativeStackScreenProps<NestedMainType, 'SingleMovie'>;
 
 export type NavigationUseType = NavigationProp<RootStack>;
 
