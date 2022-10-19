@@ -1,9 +1,8 @@
-import { MyWatchlistPropsType, useAppNavigation } from '../types/types';
-import { Button, Text, View } from 'react-native';
+import { MyWatchlistPropsType } from '../types/types';
+import { Text, View } from 'react-native';
 import { THEME } from '../styles/theme';
 
 export const MyWatchlist = ({}: MyWatchlistPropsType) => {
-  const navigation = useAppNavigation();
   return (
     <View
       style={{
@@ -13,13 +12,7 @@ export const MyWatchlist = ({}: MyWatchlistPropsType) => {
         backgroundColor: THEME.DARK,
       }}
     >
-      <Text>Details Screen</Text>
-      <Button
-        title="Jump to Settings"
-        onPress={() =>
-          navigation.navigate('Settings', { id: 1000, data: 'Hello new Settings screen' })
-        }
-      />
+      <Text>My watchlist</Text>
     </View>
   );
 };

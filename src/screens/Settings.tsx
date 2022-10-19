@@ -1,13 +1,55 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Button, Image, StyleSheet, Text, View } from 'react-native';
 import { THEME } from '../styles/theme';
 import { CONSTANTS } from '../constants';
+import { Switcher } from '../components';
+import { useAppContext } from '../context/AppContext';
+import { useState } from 'react';
+import { textTranslate } from '../utils/textTranslate';
+import { useAuthContext } from '../context/AuthContext';
+import { API } from '../api';
 
 export const Settings = () => {
+  const { setLanguage, language, isLoading, setIsLoading } = useAppContext();
+
+  const { setIsAuth, setSessionId, sessionId } = useAuthContext();
+
+  const [value, setValue] = useState<'ru' | 'eng'>('eng');
+
+  const handleLogout = () => {
+    setIsLoading(true);
+    API.deleteSession(sessionId)
+      .then((res: any) => {
+        if (res.success) {
+          setIsAuth(false);
+          setSessionId('');
+        }
+      })
+      .finally(() => setIsLoading(false));
+  };
   return (
     <View style={styles.settings}>
-      <Text style={styles.text}>API Provided by:</Text>
+      <Text style={styles.text}>API {textTranslate(language, 'Provided by', 'Предоставлен')}:</Text>
       <View style={styles.logoContainer}>
         <Image style={styles.logo} source={require('../../assets/imdb_logo.png')} />
+      </View>
+      <View>
+        <Switcher
+          language={language}
+          value={value}
+          onChange={(value) => {
+            setValue(value);
+            setLanguage(value === 'eng' ? 'en-US' : 'ru-RUS');
+          }}
+          text1="ru"
+          text2="eng"
+        />
+      </View>
+      <View style={styles.btnContainer}>
+        {isLoading ? (
+          <ActivityIndicator size="large" color={THEME.BLUE} />
+        ) : (
+          <Button title="Log out" color={THEME.BLUE} onPress={handleLogout} />
+        )}
       </View>
     </View>
   );
@@ -34,5 +76,8 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'contain',
     borderRadius: 35,
+  },
+  btnContainer: {
+    width: 100,
   },
 });
