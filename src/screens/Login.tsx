@@ -16,9 +16,10 @@ import { API } from '../api';
 import { useAuthContext } from '../context/AuthContext';
 import { ERROR_MESSAGES } from '../constants';
 import { useAppContext } from '../context/AppContext';
+import { AsyncStore } from '../utils/async-store';
 
 export const Login = () => {
-  const { setIsAuth, setSessionId } = useAuthContext();
+  const { setIsAuth } = useAuthContext();
 
   const { isLoading, setIsLoading } = useAppContext();
 
@@ -46,8 +47,8 @@ export const Login = () => {
       .then((res: any) => {
         return API.makeSession(res.request_token).then((res: any) => {
           if (res.success) {
-            setSessionId(res.session_id);
             setIsAuth(true);
+            AsyncStore.setValue('sessionId', res.session_id);
           } else setError(ERROR_MESSAGES.INCORRECT_LOGIN_OR_PASSWORD);
         });
       })

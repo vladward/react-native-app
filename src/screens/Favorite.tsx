@@ -2,7 +2,7 @@ import { MyWatchlistPropsType } from '../types/types';
 import { Text, View } from 'react-native';
 import { THEME } from '../styles/theme';
 
-export const MyWatchlist = ({}: MyWatchlistPropsType) => {
+export const Favorite = ({}: MyWatchlistPropsType) => {
   return (
     <View
       style={{

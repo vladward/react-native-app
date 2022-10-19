@@ -8,7 +8,7 @@ export type NestedMainType = {
 
 export type RootStack = {
   NowPlaying: NavigatorScreenParams<NestedMainType>;
-  MyWatchlist: undefined;
+  Favorite: undefined;
   Settings:
     | {
         id: number | string;
@@ -17,9 +17,11 @@ export type RootStack = {
     | undefined;
 };
 
-export type NowPlayingPropsType = NativeStackScreenProps<RootStack, 'NowPlaying'>;
-export type MyWatchlistPropsType = NativeStackScreenProps<RootStack, 'MyWatchlist'>;
-export type SettingsPropsType = NativeStackScreenProps<RootStack, 'Settings'>;
+export type LoginStack = {
+  Login: undefined;
+};
+
+export type MyWatchlistPropsType = NativeStackScreenProps<RootStack, 'Favorite'>;
 export type TwoPropsType = NativeStackScreenProps<NestedMainType, 'SingleMovie'>;
 
 export type NavigationUseType = NavigationProp<RootStack>;

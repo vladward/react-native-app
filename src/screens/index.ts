@@ -1,3 +1,4 @@
 export * from './Main';
-export * from './MyWatchlist';
+export * from './Favorite';
 export * from './Settings';
+export * from './Login';
