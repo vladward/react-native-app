@@ -1,16 +1,27 @@
 import { RootStack } from '../types/types';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NowPlaying } from './NowPlaying';
 import { MyWatchlist } from './MyWatchlist';
 import { Settings } from './Settings';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { THEME } from '../styles/theme';
 import { CONSTANTS } from '../constants';
 import { Platform } from 'react-native';
+import { MainNested } from './nestedScreen/MainNested';
+import { useAppContext } from '../context/AppContext';
+import { textTranslate } from '../utils/textTranslate';
+import { useAuthContext } from '../context/AuthContext';
+import { Login } from './Login';
 
 const Tab = createBottomTabNavigator<RootStack>();
 
 export const Main = () => {
+  const { language } = useAppContext();
+  const { isAuth } = useAuthContext();
+
+  if (!isAuth) {
+    return <Login />;
+  }
+
   const handleGetTabIcon = (route: RouteType, focused: boolean) => {
     switch (route.name) {
       case 'MyWatchlist':
@@ -64,12 +75,23 @@ export const Main = () => {
         headerBackTitleVisible: false,
       })}
       initialRouteName="NowPlaying"
+      sceneContainerStyle={{ backgroundColor: THEME.DARK }}
     >
-      <Tab.Screen name="NowPlaying">{(props) => <NowPlaying {...props} />}</Tab.Screen>
-      <Tab.Screen name="MyWatchlist" component={MyWatchlist} options={{ title: 'My Watchlist' }} />
-      <Tab.Screen name="Settings" options={{ title: 'Settings' }}>
-        {(props) => <Settings {...props} />}
-      </Tab.Screen>
+      <Tab.Screen
+        name="NowPlaying"
+        component={MainNested}
+        options={{ title: textTranslate(language, 'Now Playing', 'В прокате') }}
+      />
+      <Tab.Screen
+        name="MyWatchlist"
+        component={MyWatchlist}
+        options={{ title: textTranslate(language, 'My Watchlist', 'Мой плейлист') }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={Settings}
+        options={{ title: textTranslate(language, 'Settings', 'Настройки') }}
+      />
     </Tab.Navigator>
   );
 };
