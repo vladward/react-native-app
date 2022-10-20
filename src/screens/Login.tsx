@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   Text,
   ActivityIndicator,
+  Linking,
+  Pressable,
 } from 'react-native';
 import { useState } from 'react';
 import { THEME } from '../styles/theme';
@@ -14,13 +16,19 @@ import { API } from '../api';
 import { useAuthContext } from '../context/AuthContext';
 import { ERROR_MESSAGES } from '../constants';
 import { useAppContext } from '../context/AppContext';
+import { AsyncStore } from '../utils/async-store';
 
 export const Login = () => {
-  const { setIsAuth, setSessionId } = useAuthContext();
+  const { setIsAuth } = useAuthContext();
+
   const { isLoading, setIsLoading } = useAppContext();
+
   const [login, setLogin] = useState('');
+
   const [password, setPassword] = useState('');
+
   const [error, setError] = useState('');
+
   const handleLogin = () => {
     Keyboard.dismiss();
     setIsLoading(true);
@@ -39,12 +47,22 @@ export const Login = () => {
       .then((res: any) => {
         return API.makeSession(res.request_token).then((res: any) => {
           if (res.success) {
-            setSessionId(res.session_id);
             setIsAuth(true);
+            AsyncStore.setValue('sessionId', res.session_id);
           } else setError(ERROR_MESSAGES.INCORRECT_LOGIN_OR_PASSWORD);
         });
       })
       .finally(() => setIsLoading(false));
+  };
+
+  const handleOpenRegisterPage = () => {
+    const url = 'https://www.themoviedb.org/signup';
+    return Linking.openURL(url);
+  };
+
+  const handleOpenForgotPassPage = () => {
+    const url = 'https://www.themoviedb.org/reset-password';
+    return Linking.openURL(url);
   };
   return (
     <TouchableOpacity
@@ -85,6 +103,14 @@ export const Login = () => {
             />
           )}
         </View>
+        <View style={styles.helpTextContainer}>
+          <Pressable onPress={handleOpenForgotPassPage}>
+            <Text style={styles.helpText}>Forgot password</Text>
+          </Pressable>
+          <Pressable onPress={handleOpenRegisterPage}>
+            <Text style={styles.helpText}>Sign up</Text>
+          </Pressable>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -115,5 +141,13 @@ const styles = StyleSheet.create({
   errorText: {
     color: THEME.BUTTON,
     textAlign: 'center',
+  },
+  helpTextContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 12,
+  },
+  helpText: {
+    color: THEME.BLUE,
   },
 });

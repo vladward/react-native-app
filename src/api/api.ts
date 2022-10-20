@@ -1,7 +1,14 @@
+import { SortType } from '../types/types';
+
 export const api_key = '365da808b8c3c4b7a04da7eca0d9524e';
 const BASE_URL = 'https://api.themoviedb.org/3/';
 
 export const API = {
+  getCurrentUser(session_id: string) {
+    return fetch(`${BASE_URL}account?api_key=${api_key}&session_id=${session_id}`).then((res) =>
+      res.json().then((data) => data)
+    );
+  },
   getMovie(movieId: string | number, language?: string) {
     return fetch(`${BASE_URL}movie/${movieId}?api_key=${api_key}&language=${language || 'en-US'}`)
       .then((res) => res.json())
@@ -14,10 +21,46 @@ export const API = {
       .then((res) => res.json())
       .then((data) => data);
   },
+  getFavoriteMovies(
+    account_id: number,
+    session_id: string,
+    sortedBy: SortType,
+    page: number,
+    language?: string
+  ) {
+    return fetch(
+      `${BASE_URL}account/${account_id}/favorite/movies?api_key=${api_key}&session_id=${session_id}&language=${
+        language || 'en-US'
+      }&sort_by=${sortedBy || 'created_at.asc'}&page=${page}`
+    )
+      .then((res) => res.json())
+      .then((data) => data);
+  },
   createRequestToken() {
     return fetch(`${BASE_URL}authentication/token/new?api_key=${api_key}`)
       .then((res) => res.json())
       .then((data) => data);
+  },
+  markAsFavorite(
+    media_id: string,
+    isFavorite: boolean,
+    account_id: string | number,
+    session_id: string
+  ) {
+    return fetch(
+      `${BASE_URL}account/${account_id}/favorite?api_key=${api_key}&session_id=${session_id}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          media_type: 'movie',
+          media_id: media_id,
+          favorite: isFavorite,
+        }),
+      }
+    ).then((res) => res.json());
   },
   validateUser(username: string, password: string, token: string) {
     return fetch(`${BASE_URL}authentication/token/validate_with_login?api_key=${api_key}`, {

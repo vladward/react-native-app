@@ -7,21 +7,24 @@ import { useState } from 'react';
 import { textTranslate } from '../utils/textTranslate';
 import { useAuthContext } from '../context/AuthContext';
 import { API } from '../api';
+import { AsyncStore } from '../utils/async-store';
 
 export const Settings = () => {
   const { setLanguage, language, isLoading, setIsLoading } = useAppContext();
 
-  const { setIsAuth, setSessionId, sessionId } = useAuthContext();
+  const { setIsAuth, sessionId } = useAuthContext();
 
   const [value, setValue] = useState<'ru' | 'eng'>('eng');
 
-  const handleLogout = () => {
+  const handleDeleteValue = async () => await AsyncStore.deleteValue('sessionId');
+
+  const handleLogout = async () => {
     setIsLoading(true);
-    API.deleteSession(sessionId)
+    await API.deleteSession(sessionId)
       .then((res: any) => {
         if (res.success) {
           setIsAuth(false);
-          setSessionId('');
+          handleDeleteValue();
         }
       })
       .finally(() => setIsLoading(false));
@@ -48,7 +51,11 @@ export const Settings = () => {
         {isLoading ? (
           <ActivityIndicator size="large" color={THEME.BLUE} />
         ) : (
-          <Button title="Log out" color={THEME.BLUE} onPress={handleLogout} />
+          <Button
+            title={textTranslate(language, 'Log out', 'Выйти')}
+            color={THEME.BLUE}
+            onPress={handleLogout}
+          />
         )}
       </View>
     </View>

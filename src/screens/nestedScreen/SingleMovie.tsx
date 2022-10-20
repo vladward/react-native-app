@@ -1,24 +1,60 @@
-import { View, Image, StyleSheet, Text, ActivityIndicator, ScrollView } from 'react-native';
-import { MovieType, TwoPropsType } from '../../types/types';
-import { useEffect, useState } from 'react';
+import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { MovieType } from '../../types/types';
+import { FC, useEffect, useState } from 'react';
 import { API } from '../../api';
 import { GetPosterPath } from '../../utils/getPosterPath';
 import { THEME } from '../../styles/theme';
 import { useAppContext } from '../../context/AppContext';
 import { textTranslate } from '../../utils/textTranslate';
+import { Ionicons } from '@expo/vector-icons';
+import { useAuthContext } from '../../context/AuthContext';
 
-export const SingleMovie = ({ route }: TwoPropsType) => {
-  const { id } = route.params;
+export const SingleMovie: FC<any> = ({ route, navigation }) => {
+  const param = route.params;
   const [movie, setMovie] = useState<MovieType>();
-  const { language } = useAppContext();
+  const { language, favoriteMoviesIds, setFavoriteMoviesIds } = useAppContext();
+  const { currentUser, sessionId } = useAuthContext();
+
+  const handleSetFavorite = async (isFavorite: boolean) => {
+    if (param?.id) {
+      await API.markAsFavorite(param.id, isFavorite, currentUser.id, sessionId).then(() => {
+        if (isFavorite) {
+          setFavoriteMoviesIds((prev: number[]) => [...prev, Number(param?.id)]);
+        } else {
+          setFavoriteMoviesIds((prev: number[]) =>
+            prev.filter((movieId) => movieId !== Number(param?.id))
+          );
+        }
+      });
+    }
+  };
+
   useEffect(() => {
-    const loadMovieById = async () => {
-      if (id) {
-        await API.getMovie(id, language).then((data) => setMovie(data));
-      }
-    };
-    loadMovieById();
+    if (param?.id) {
+      API.getMovie(param?.id, language).then((data) => setMovie(data));
+    }
   }, [language]);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () =>
+        favoriteMoviesIds.includes(Number(param?.id)) ? (
+          <Ionicons
+            onPress={() => handleSetFavorite(false)}
+            name="star"
+            size={24}
+            color={THEME.YELLOW}
+          />
+        ) : (
+          <Ionicons
+            onPress={() => handleSetFavorite(true)}
+            name="star-outline"
+            size={24}
+            color={THEME.TEXT}
+          />
+        ),
+    });
+  }, [navigation, param?.id, movie?.id, favoriteMoviesIds]);
 
   if (!movie) {
     return (
@@ -39,7 +75,7 @@ export const SingleMovie = ({ route }: TwoPropsType) => {
           <Image style={styles.image} source={{ uri: path }} />
         </View>
         <View style={styles.right}>
-          <Text style={styles.text}>
+          <Text style={styles.titleText}>
             {textTranslate(language, 'Title', 'Название')}: {movie.original_title}
           </Text>
           <Text style={styles.text}>
@@ -122,6 +158,10 @@ const styles = StyleSheet.create({
   },
   text: {
     color: THEME.TEXT,
+  },
+  titleText: {
+    color: THEME.TEXT,
+    width: 280,
   },
   loadingText: {
     color: THEME.TEXT,

@@ -6,4 +6,5 @@ export const THEME = {
   LIGHT_TEXT: '#404040',
   BLUE: '#0a84ff',
   BUTTON: '#dc2626',
+  YELLOW: '#FFC800FF',
 };

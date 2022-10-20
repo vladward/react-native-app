@@ -1,4 +1,7 @@
-import React, { createContext, FC, useContext, useState } from 'react';
+import React, { createContext, FC, useContext, useEffect, useState } from 'react';
+import { AsyncStore } from '../utils/async-store';
+import { API } from '../api';
+import { UserType } from '../types/types';
 
 const AuthContext = createContext<any>('');
 const useAuthContext = () => {
@@ -13,6 +16,29 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isAuth, setIsAuth] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [sessionId, setSessionId] = useState('');
+  const [currentUser, setCurrentUser] = useState<UserType>();
+
+  const updateSessionId = async () => {
+    try {
+      await AsyncStore.getValue('sessionId').then((value) => {
+        if (value !== null) setSessionId(value);
+      });
+    } catch (e) {
+      alert(e);
+    }
+  };
+
+  useEffect(() => {
+    updateSessionId();
+  }, []);
+
+  useEffect(() => {
+    if (sessionId) setIsAuth(true);
+  }, [sessionId]);
+
+  useEffect(() => {
+    sessionId && API.getCurrentUser(sessionId).then((data) => setCurrentUser(data));
+  }, [sessionId]);
 
   return (
     <AuthContext.Provider
@@ -23,6 +49,7 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
         setIsAuth,
         setIsLoggedIn,
         setSessionId,
+        currentUser,
       }}
     >
       {children}

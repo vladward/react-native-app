@@ -1,30 +1,49 @@
 import { NavigationProp, NavigatorScreenParams, useNavigation } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 export type NestedMainType = {
   NowPlayingMovies: undefined;
-  SingleMovie: { id: string | number; name: string } | undefined;
+  SingleMovie: { id: string | number; name: string };
 };
+
+export type NestedFavoriteType = {
+  FavoriteList: undefined;
+  FavoriteSingleMovie: { id: string | number; name: string };
+};
+
+export type SettingsType = { id: number | string; data: string } | undefined;
 
 export type RootStack = {
   NowPlaying: NavigatorScreenParams<NestedMainType>;
-  MyWatchlist: undefined;
-  Settings:
-    | {
-        id: number | string;
-        data: string;
-      }
-    | undefined;
+  Favorite: NavigatorScreenParams<NestedFavoriteType>;
+  Settings: NavigatorScreenParams<SettingsType>;
 };
 
-export type NowPlayingPropsType = NativeStackScreenProps<RootStack, 'NowPlaying'>;
-export type MyWatchlistPropsType = NativeStackScreenProps<RootStack, 'MyWatchlist'>;
-export type SettingsPropsType = NativeStackScreenProps<RootStack, 'Settings'>;
-export type TwoPropsType = NativeStackScreenProps<NestedMainType, 'SingleMovie'>;
+export type LoginStack = {
+  Login: undefined;
+};
 
 export type NavigationUseType = NavigationProp<RootStack>;
 
 export const useAppNavigation = () => useNavigation<NavigationUseType>();
+
+export type SortType = 'created_at.asc' | 'created_at.desc';
+
+export type UserType = {
+  avatar: {
+    gravatar: {
+      hash: string;
+    };
+    tmdb: {
+      avatar_path: string | null;
+    };
+  };
+  id: number;
+  include_adult: boolean;
+  iso_3166_1: string;
+  iso_639_1: string;
+  name: string;
+  username: string;
+};
 
 export type MovieType = {
   adult: boolean;
