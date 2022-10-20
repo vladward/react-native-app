@@ -1,23 +1,23 @@
-import { View, Text, ListRenderItem, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
+import { ActivityIndicator, FlatList, ListRenderItem, StyleSheet, Text, View } from 'react-native';
 import { NowPlayingResultsType, NowPlayingType, useAppNavigation } from '../../types/types';
 import { useEffect, useState } from 'react';
-import { Card } from '../../components';
+import { Card, Pagination } from '../../components';
 import { THEME } from '../../styles/theme';
 import { API } from '../../api';
 import { CONSTANTS } from '../../constants';
-import { Pagination } from '../../components';
 import { useAppContext } from '../../context/AppContext';
 
 export const NowPlayingMovies = () => {
   const [nowPlayingData, setNowPlayingData] = useState<NowPlayingType>();
+
   const [currentPage, setCurrentPage] = useState<number>(1);
+
   const navigation = useAppNavigation();
-  const { language, setIsLoading } = useAppContext();
+
+  const { language, setParentPage } = useAppContext();
+
   useEffect(() => {
-    setIsLoading(true);
-    API.getNowPlaying(currentPage, language)
-      .then((data) => setNowPlayingData(data))
-      .finally(() => setIsLoading(false));
+    API.getNowPlaying(currentPage, language).then((data) => setNowPlayingData(data));
   }, [currentPage, language]);
 
   const render: ListRenderItem<NowPlayingResultsType> = ({ item }) => {
@@ -25,6 +25,7 @@ export const NowPlayingMovies = () => {
       <Card
         cardData={item}
         onPress={() => {
+          setParentPage('NowPlaying');
           navigation.navigate('NowPlaying', {
             screen: 'SingleMovie',
             params: { id: item.id, name: item.title },

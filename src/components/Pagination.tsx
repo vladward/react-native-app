@@ -24,7 +24,6 @@ export const Pagination: FC<PaginationType> = ({
 
   const handleClickPage = (e: any, pageNumber: string | number) => {
     paginate(Number(pageNumber));
-    paginate(Number(pageNumber));
   };
 
   return (
