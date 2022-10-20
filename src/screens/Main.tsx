@@ -50,7 +50,7 @@ export const Main = () => {
     }
   };
   const focusedColor = (focused: boolean) => (focused ? THEME.BLUE : THEME.TEXT);
-  if (isAuth)
+  if (isAuth) {
     return (
       <Tab.Navigator
         screenOptions={({ route }) => ({
@@ -94,11 +94,13 @@ export const Main = () => {
         />
       </Tab.Navigator>
     );
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Login" component={Login} />
-    </Stack.Navigator>
-  );
+  } else {
+    return (
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Login" component={Login} />
+      </Stack.Navigator>
+    );
+  }
 };
 
 type RouteType = { name: 'NowPlaying' | 'Favorite' | 'Settings' };
