@@ -1,18 +1,28 @@
-import { MyWatchlistPropsType } from '../types/types';
-import { Text, View } from 'react-native';
+import { NestedFavoriteType } from '../types/types';
+import { Text } from 'react-native';
 import { THEME } from '../styles/theme';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { FavoriteList, SingleMovie } from './nestedScreen';
 
-export const Favorite = ({}: MyWatchlistPropsType) => {
+const Stack = createNativeStackNavigator<NestedFavoriteType>();
+
+export const Favorite = () => {
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: THEME.DARK,
-      }}
-    >
-      <Text>My watchlist</Text>
-    </View>
+    <Stack.Navigator initialRouteName={'FavoriteList'}>
+      <Stack.Screen name="FavoriteList" component={FavoriteList} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="FavoriteSingleMovie"
+        component={SingleMovie}
+        options={({ route }) => ({
+          title: route?.params?.name,
+          headerTitleAlign: 'center',
+          headerStyle: { backgroundColor: THEME.LIGHT_DARK },
+          headerTintColor: THEME.TEXT,
+          headerTitle: () => (
+            <Text style={{ width: 300, color: THEME.TEXT }}>{route.params.name}</Text>
+          ),
+        })}
+      />
+    </Stack.Navigator>
   );
 };
