@@ -1,5 +1,7 @@
 import React, { createContext, FC, useContext, useEffect, useState } from 'react';
 import { AsyncStore } from '../utils/async-store';
+import { API } from '../api';
+import { UserType } from '../types/types';
 
 const AuthContext = createContext<any>('');
 const useAuthContext = () => {
@@ -14,6 +16,7 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isAuth, setIsAuth] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [sessionId, setSessionId] = useState('');
+  const [currentUser, setCurrentUser] = useState<UserType>();
 
   const updateSessionId = async () => {
     try {
@@ -33,6 +36,10 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
     if (sessionId) setIsAuth(true);
   }, [sessionId]);
 
+  useEffect(() => {
+    sessionId && API.getCurrentUser(sessionId).then((data) => setCurrentUser(data));
+  }, [sessionId]);
+
   return (
     <AuthContext.Provider
       value={{
@@ -42,6 +49,7 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
         setIsAuth,
         setIsLoggedIn,
         setSessionId,
+        currentUser,
       }}
     >
       {children}
