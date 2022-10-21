@@ -36,6 +36,15 @@ export const API = {
       .then((res) => res.json())
       .then((data) => data);
   },
+  searchMovies(page: number, value: string, language?: string) {
+    return fetch(
+      `${BASE_URL}search/movie?api_key=${api_key}&language=${
+        language || 'en-US'
+      }&query=${value}&page=${page}&include_adult=false`
+    )
+      .then((res) => res.json())
+      .then((data) => data);
+  },
   createRequestToken() {
     return fetch(`${BASE_URL}authentication/token/new?api_key=${api_key}`)
       .then((res) => res.json())

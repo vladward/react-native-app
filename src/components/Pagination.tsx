@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    width: 30,
+    minWidth: 30,
     height: 30,
     marginHorizontal: 4,
   },
