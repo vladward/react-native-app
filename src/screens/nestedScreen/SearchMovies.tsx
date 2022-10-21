@@ -17,6 +17,7 @@ import { API } from '../../api';
 import { CONSTANTS } from '../../constants';
 import { useAppContext } from '../../context/AppContext';
 import { FontAwesome5 } from '@expo/vector-icons';
+import { textTranslate } from '../../utils/textTranslate';
 
 export const SearchMovies = () => {
   const [allMoviesData, setAllMoviesData] = useState<SearchMoviesType>();
@@ -41,7 +42,7 @@ export const SearchMovies = () => {
           setParentPage('SearchMoviesList');
           navigation.navigate('SearchMovies', {
             screen: 'AllSingleMovie',
-            params: { id: item?.id, name: item?.title },
+            params: { id: item.id, name: item.title },
           });
         }}
       />
@@ -51,7 +52,9 @@ export const SearchMovies = () => {
   if (!allMoviesData) {
     return (
       <View style={styles.nowPlayingContainerLoader}>
-        <Text style={styles.notFoundText}>Loading ...</Text>
+        <Text style={styles.notFoundText}>
+          {textTranslate(language, 'Loading ...', 'Загрузка ...')}
+        </Text>
         <Text>
           <ActivityIndicator size="large" color={THEME.BLUE} />;
         </Text>
@@ -75,7 +78,9 @@ export const SearchMovies = () => {
         />
         {!allMoviesData?.results?.length ? (
           <>
-            <Text style={styles.notFoundText}>No results</Text>
+            <Text style={styles.notFoundText}>
+              {textTranslate(language, 'No results', 'Список пуст')}
+            </Text>
             <FontAwesome5 name="sad-tear" size={24} color={THEME.TEXT} />
           </>
         ) : (
@@ -96,6 +101,7 @@ export const SearchMovies = () => {
                 siblingCount={1}
               />
             }
+            onScroll={() => Keyboard.dismiss()}
             ListFooterComponentStyle={{
               alignItems: 'center',
               justifyContent: 'center',

@@ -59,7 +59,9 @@ export const SingleMovie: FC<any> = ({ route, navigation }) => {
   if (!movie) {
     return (
       <View style={styles.singleMovieContainerLoader}>
-        <Text style={styles.loadingText}>Loading ...</Text>
+        <Text style={styles.loadingText}>
+          {textTranslate(language, 'Loading ...', 'Загрузка ...')}
+        </Text>
         <Text>
           <ActivityIndicator size="large" color={THEME.BLUE} />;
         </Text>
