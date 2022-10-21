@@ -12,6 +12,7 @@ import { textTranslate } from '../utils/textTranslate';
 import { useAuthContext } from '../context/AuthContext';
 import { Login } from './Login';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { SearchMoviesNested } from './nestedScreen';
 
 const Tab = createBottomTabNavigator<RootStack>();
 
@@ -47,6 +48,10 @@ export const Main = () => {
             color={focusedColor(focused)}
           />
         );
+      case 'SearchMovies':
+        return (
+          <MaterialIcons name="search" size={CONSTANTS.ICON_SIZE} color={focusedColor(focused)} />
+        );
     }
   };
   const focusedColor = (focused: boolean) => (focused ? THEME.BLUE : THEME.TEXT);
@@ -73,6 +78,7 @@ export const Main = () => {
           headerTitleAlign: 'center',
           headerShadowVisible: false,
           headerBackTitleVisible: false,
+          tabBarHideOnKeyboard: true,
         })}
         initialRouteName="NowPlaying"
         sceneContainerStyle={{ backgroundColor: THEME.DARK }}
@@ -86,6 +92,11 @@ export const Main = () => {
           name="Favorite"
           component={Favorite}
           options={{ title: textTranslate(language, 'Favorite', 'Избранное') }}
+        />
+        <Tab.Screen
+          name="SearchMovies"
+          component={SearchMoviesNested}
+          options={{ title: textTranslate(language, 'Search', 'Поиск') }}
         />
         <Tab.Screen
           name="Settings"
@@ -103,4 +114,4 @@ export const Main = () => {
   }
 };
 
-type RouteType = { name: 'NowPlaying' | 'Favorite' | 'Settings' };
+type RouteType = { name: 'NowPlaying' | 'Favorite' | 'Settings' | 'SearchMovies' };

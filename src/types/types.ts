@@ -10,12 +10,18 @@ export type NestedFavoriteType = {
   FavoriteSingleMovie: { id: string | number; name: string };
 };
 
+export type NestedAllMoviesType = {
+  SearchMoviesList: undefined;
+  AllSingleMovie: { id: string | number; name: string };
+};
+
 export type SettingsType = { id: number | string; data: string } | undefined;
 
 export type RootStack = {
   NowPlaying: NavigatorScreenParams<NestedMainType>;
   Favorite: NavigatorScreenParams<NestedFavoriteType>;
   Settings: NavigatorScreenParams<SettingsType>;
+  SearchMovies: NavigatorScreenParams<NestedAllMoviesType>;
 };
 
 export type LoginStack = {
@@ -118,5 +124,12 @@ export type NowPlayingType = {
     maximum: string;
     minimum: string;
   };
+  results: Array<NowPlayingResultsType>;
+};
+
+export type SearchMoviesType = {
+  page: number;
+  total_pages: number;
+  total_results: number;
   results: Array<NowPlayingResultsType>;
 };
