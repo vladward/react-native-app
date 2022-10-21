@@ -27,7 +27,7 @@ export const FavoriteList = () => {
     API.getFavoriteMovies(currentUser?.id, sessionId, 'created_at.asc', currentPage, language).then(
       (data) => {
         setFavoriteMovies(data);
-        setFavoriteMoviesIds(data.results.map((movie: MovieType) => movie.id));
+        setFavoriteMoviesIds(data?.results?.map((movie: MovieType) => movie.id));
       }
     );
   }, [currentPage, language, favoriteMoviesIds]);
@@ -36,7 +36,7 @@ export const FavoriteList = () => {
     return <FavoriteMovieCard item={item} setParentPage={setParentPage} />;
   };
 
-  if (!favoriteMovies) {
+  if (!favoriteMovies?.results) {
     return (
       <View style={styles.favoriteContainerLoader}>
         <Text style={styles.notFoundText}>

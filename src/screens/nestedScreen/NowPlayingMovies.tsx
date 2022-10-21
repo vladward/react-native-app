@@ -36,7 +36,7 @@ export const NowPlayingMovies = () => {
     );
   };
 
-  if (!nowPlayingData) {
+  if (!nowPlayingData?.results) {
     return (
       <View style={styles.nowPlayingContainerLoader}>
         <Text style={styles.notFoundText}>
