@@ -1,5 +1,5 @@
 import { THEME } from '../styles/theme';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View, Dimensions } from 'react-native';
 import { textTranslate } from '../utils/textTranslate';
 import { NowPlayingResultsType, useAppNavigation } from '../types/types';
 import { useAppContext } from '../context/AppContext';
@@ -48,7 +48,7 @@ export const FavoriteMovieCard = ({ setParentPage, item }: FavoriteCardType) => 
 
 const styles = StyleSheet.create({
   favoriteMovieCardWrapper: {
-    width: 410,
+    width: Dimensions.get('screen').width,
     backgroundColor: THEME.DARK,
     marginVertical: 5,
     flexDirection: 'row',
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   text: {
     color: THEME.TEXT,
     fontSize: 20,
-    width: 300,
+    width: Dimensions.get('screen').width - 120,
   },
   left: {
     flexDirection: 'row',

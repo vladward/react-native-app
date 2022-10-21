@@ -13,15 +13,17 @@ const useAuthContext = () => {
 };
 
 const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [sessionId, setSessionId] = useState<any>();
   const [isAuth, setIsAuth] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [sessionId, setSessionId] = useState('');
   const [currentUser, setCurrentUser] = useState<UserType>();
 
+  const [isAppLoading, setIsAppLoading] = useState(true);
   const updateSessionId = async () => {
     try {
       await AsyncStore.getValue('sessionId').then((value) => {
-        if (value !== null) setSessionId(value);
+        setSessionId(value);
+        setIsAppLoading(false);
       });
     } catch (e) {
       alert(e);
@@ -46,10 +48,12 @@ const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
         isAuth,
         isLoggedIn,
         sessionId,
+        isAppLoading,
         setIsAuth,
         setIsLoggedIn,
         setSessionId,
         currentUser,
+        setIsAppLoading,
       }}
     >
       {children}

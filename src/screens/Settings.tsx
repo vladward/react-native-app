@@ -12,7 +12,7 @@ import { AsyncStore } from '../utils/async-store';
 export const Settings = () => {
   const { setLanguage, language, isLoading, setIsLoading } = useAppContext();
 
-  const { setIsAuth, sessionId } = useAuthContext();
+  const { setIsAuth, sessionId, setSessionId } = useAuthContext();
 
   const [value, setValue] = useState<'ru' | 'eng'>('eng');
 
@@ -24,6 +24,7 @@ export const Settings = () => {
       .then((res: any) => {
         if (res.success) {
           setIsAuth(false);
+          setSessionId(null);
           handleDeleteValue();
         }
       })

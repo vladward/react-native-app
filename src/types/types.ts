@@ -22,9 +22,6 @@ export type RootStack = {
   Favorite: NavigatorScreenParams<NestedFavoriteType>;
   Settings: NavigatorScreenParams<SettingsType>;
   SearchMovies: NavigatorScreenParams<NestedAllMoviesType>;
-};
-
-export type LoginStack = {
   Login: undefined;
 };
 
@@ -33,6 +30,8 @@ export type NavigationUseType = NavigationProp<RootStack>;
 export const useAppNavigation = () => useNavigation<NavigationUseType>();
 
 export type SortType = 'created_at.asc' | 'created_at.desc';
+
+export type RouteType = { name: 'NowPlaying' | 'Favorite' | 'Settings' | 'SearchMovies' | 'Login' };
 
 export type UserType = {
   avatar: {

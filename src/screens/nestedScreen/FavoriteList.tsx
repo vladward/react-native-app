@@ -1,4 +1,12 @@
-import { ActivityIndicator, FlatList, ListRenderItem, StyleSheet, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  ListRenderItem,
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+} from 'react-native';
 import { THEME } from '../../styles/theme';
 import { MovieType, NowPlayingResultsType, NowPlayingType } from '../../types/types';
 import { FavoriteMovieCard, Pagination } from '../../components';
@@ -7,6 +15,7 @@ import { useAuthContext } from '../../context/AuthContext';
 import { useAppContext } from '../../context/AppContext';
 import { useEffect, useState } from 'react';
 import { API } from '../../api';
+import { textTranslate } from '../../utils/textTranslate';
 
 export const FavoriteList = () => {
   const { currentUser, sessionId } = useAuthContext();
@@ -15,10 +24,10 @@ export const FavoriteList = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
-    API.getFavoriteMovies(currentUser.id, sessionId, 'created_at.asc', currentPage, language).then(
+    API.getFavoriteMovies(currentUser?.id, sessionId, 'created_at.asc', currentPage, language).then(
       (data) => {
         setFavoriteMovies(data);
-        setFavoriteMoviesIds(data.results.map((movie: MovieType) => movie.id));
+        setFavoriteMoviesIds(data?.results?.map((movie: MovieType) => movie.id));
       }
     );
   }, [currentPage, language, favoriteMoviesIds]);
@@ -27,10 +36,12 @@ export const FavoriteList = () => {
     return <FavoriteMovieCard item={item} setParentPage={setParentPage} />;
   };
 
-  if (!favoriteMovies) {
+  if (!favoriteMovies?.results) {
     return (
       <View style={styles.favoriteContainerLoader}>
-        <Text style={styles.notFoundText}>Loading ...</Text>
+        <Text style={styles.notFoundText}>
+          {textTranslate(language, 'Loading ...', 'Загрузка ...')}
+        </Text>
         <Text>
           <ActivityIndicator size="large" color={THEME.BLUE} />;
         </Text>
@@ -55,7 +66,6 @@ export const FavoriteList = () => {
             siblingCount={2}
           />
         }
-        scrollEnabled={false}
         ListFooterComponentStyle={styles.paginationListFooter}
       />
     </View>
@@ -73,6 +83,7 @@ const styles = StyleSheet.create({
   favoriteListContainer: {
     flex: 1,
     backgroundColor: THEME.DARK,
+    width: Dimensions.get('screen').width,
   },
   notFoundText: {
     color: THEME.TEXT,

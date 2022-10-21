@@ -6,6 +6,7 @@ import { THEME } from '../../styles/theme';
 import { API } from '../../api';
 import { CONSTANTS } from '../../constants';
 import { useAppContext } from '../../context/AppContext';
+import { textTranslate } from '../../utils/textTranslate';
 
 export const NowPlayingMovies = () => {
   const [nowPlayingData, setNowPlayingData] = useState<NowPlayingType>();
@@ -35,10 +36,12 @@ export const NowPlayingMovies = () => {
     );
   };
 
-  if (!nowPlayingData) {
+  if (!nowPlayingData?.results) {
     return (
       <View style={styles.nowPlayingContainerLoader}>
-        <Text style={styles.notFoundText}>Loading ...</Text>
+        <Text style={styles.notFoundText}>
+          {textTranslate(language, 'Loading ...', 'Загрузка ...')}
+        </Text>
         <Text>
           <ActivityIndicator size="large" color={THEME.BLUE} />;
         </Text>
@@ -48,9 +51,11 @@ export const NowPlayingMovies = () => {
 
   return (
     <View style={styles.listContainer}>
-      <View style={styles.listWrapper}>
+      <View>
         {!nowPlayingData.results.length ? (
-          <Text style={styles.notFoundText}>Movies not found :(</Text>
+          <Text style={styles.notFoundText}>
+            {textTranslate(language, 'Movies not found', 'Фильмы не найдены')}
+          </Text>
         ) : null}
         <FlatList<NowPlayingResultsType>
           horizontal={false}
@@ -96,7 +101,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 0,
   },
-  listWrapper: { flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center' },
   image: {
     width: 50,
     height: 50,
