@@ -6,7 +6,7 @@ import { THEME } from '../../styles/theme';
 import { API } from '../../api';
 import { CONSTANTS } from '../../constants';
 import { useAppContext } from '../../context/AppContext';
-import { textTranslate } from '../../utils/textTranslate';
+import { textTranslate } from '../../utils';
 
 export const NowPlayingMovies = () => {
   const [nowPlayingData, setNowPlayingData] = useState<NowPlayingType>();

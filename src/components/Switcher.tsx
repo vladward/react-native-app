@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Pressable, StyleSheet, View, Text } from 'react-native';
-import { textTranslate } from '../utils/textTranslate';
+import { textTranslate } from '../utils';
 import { THEME } from '../styles/theme';
 import { CONSTANTS } from '../constants';
 

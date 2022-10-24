@@ -8,7 +8,7 @@ import { CONSTANTS } from '../constants';
 import { ActivityIndicator, Platform, StyleSheet, Text, View } from 'react-native';
 import { MainNested, SearchMoviesNested } from './nestedScreen';
 import { useAppContext } from '../context/AppContext';
-import { textTranslate } from '../utils/textTranslate';
+import { textTranslate } from '../utils';
 import { useAuthContext } from '../context/AuthContext';
 import { Login } from './Login';
 
@@ -16,6 +16,7 @@ const Tab = createBottomTabNavigator<RootStack>();
 
 export const Main = () => {
   const { language } = useAppContext();
+
   const { isAuth, isAppLoading } = useAuthContext();
 
   const handleGetTabIcon = (route: RouteType, focused: boolean) => {
@@ -50,6 +51,7 @@ export const Main = () => {
         );
     }
   };
+
   const focusedColor = (focused: boolean) => (focused ? THEME.BLUE : THEME.TEXT);
 
   if (isAppLoading) {

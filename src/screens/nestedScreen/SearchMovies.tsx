@@ -17,7 +17,7 @@ import { API } from '../../api';
 import { CONSTANTS } from '../../constants';
 import { useAppContext } from '../../context/AppContext';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { textTranslate } from '../../utils/textTranslate';
+import { textTranslate } from '../../utils';
 
 export const SearchMovies = () => {
   const [allMoviesData, setAllMoviesData] = useState<SearchMoviesType>();

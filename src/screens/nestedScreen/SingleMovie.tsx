@@ -2,17 +2,19 @@ import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, View } from 're
 import { MovieType } from '../../types/types';
 import { FC, useEffect, useState } from 'react';
 import { API } from '../../api';
-import { GetPosterPath } from '../../utils/getPosterPath';
+import { GetPosterPath, textTranslate } from '../../utils';
 import { THEME } from '../../styles/theme';
 import { useAppContext } from '../../context/AppContext';
-import { textTranslate } from '../../utils/textTranslate';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuthContext } from '../../context/AuthContext';
 
 export const SingleMovie: FC<any> = ({ route, navigation }) => {
   const param = route.params;
+
   const [movie, setMovie] = useState<MovieType>();
+
   const { language, favoriteMoviesIds, setFavoriteMoviesIds } = useAppContext();
+
   const { currentUser, sessionId } = useAuthContext();
 
   const handleSetFavorite = async (isFavorite: boolean) => {

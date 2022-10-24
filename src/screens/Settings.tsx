@@ -4,10 +4,9 @@ import { CONSTANTS } from '../constants';
 import { Switcher } from '../components';
 import { useAppContext } from '../context/AppContext';
 import { useState } from 'react';
-import { textTranslate } from '../utils/textTranslate';
+import { textTranslate, AsyncStore } from '../utils';
 import { useAuthContext } from '../context/AuthContext';
 import { API } from '../api';
-import { AsyncStore } from '../utils/async-store';
 
 export const Settings = () => {
   const { setLanguage, language, isLoading, setIsLoading } = useAppContext();

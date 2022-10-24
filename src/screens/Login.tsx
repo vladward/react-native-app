@@ -16,7 +16,7 @@ import { API } from '../api';
 import { useAuthContext } from '../context/AuthContext';
 import { ERROR_MESSAGES } from '../constants';
 import { useAppContext } from '../context/AppContext';
-import { AsyncStore } from '../utils/async-store';
+import { AsyncStore } from '../utils';
 
 export const Login = () => {
   const { setIsAuth, setSessionId } = useAuthContext();
@@ -35,7 +35,11 @@ export const Login = () => {
     setError('');
     API.createRequestToken()
       .then((res: any) => {
-        if (res.success) return res;
+        if (res.success) {
+          return res;
+        } else {
+          setError(ERROR_MESSAGES.INCORRECT_LOGIN_OR_PASSWORD);
+        }
       })
       .then((res: any) => {
         if (res.success) {
@@ -53,7 +57,7 @@ export const Login = () => {
               AsyncStore.setValue('sessionId', res.session_id);
             } else setError(ERROR_MESSAGES.INCORRECT_LOGIN_OR_PASSWORD);
           });
-        }
+        } else setError(ERROR_MESSAGES.INCORRECT_LOGIN_OR_PASSWORD);
       })
       .finally(() => setIsLoading(false));
   };
@@ -74,7 +78,7 @@ export const Login = () => {
       style={styles.loginWrapper}
     >
       <View style={styles.loginContainer}>
-        <Text style={styles.errorText}>{error}</Text>
+        {error ? <Text style={styles.errorText}>{error}</Text> : null}
         <TextInput
           onChange={() => setError('')}
           style={styles.input}

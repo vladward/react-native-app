@@ -1,5 +1,5 @@
 import React, { createContext, FC, useContext, useEffect, useState } from 'react';
-import { AsyncStore } from '../utils/async-store';
+import { AsyncStore } from '../utils';
 import { API } from '../api';
 import { UserType } from '../types/types';
 
@@ -14,11 +14,15 @@ const useAuthContext = () => {
 
 const AuthProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
   const [sessionId, setSessionId] = useState<any>();
+
   const [isAuth, setIsAuth] = useState(false);
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const [currentUser, setCurrentUser] = useState<UserType>();
 
   const [isAppLoading, setIsAppLoading] = useState(true);
+
   const updateSessionId = async () => {
     try {
       await AsyncStore.getValue('sessionId').then((value) => {

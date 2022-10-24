@@ -1,26 +1,21 @@
-import {
-  ActivityIndicator,
-  FlatList,
-  ListRenderItem,
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-} from 'react-native';
+import { ActivityIndicator, FlatList, ListRenderItem, StyleSheet, Text, View } from 'react-native';
 import { THEME } from '../../styles/theme';
 import { MovieType, NowPlayingResultsType, NowPlayingType } from '../../types/types';
 import { FavoriteMovieCard, Pagination } from '../../components';
-import { CONSTANTS } from '../../constants';
+import { CONSTANTS, DEVICE_WIDTH } from '../../constants';
 import { useAuthContext } from '../../context/AuthContext';
 import { useAppContext } from '../../context/AppContext';
 import { useEffect, useState } from 'react';
 import { API } from '../../api';
-import { textTranslate } from '../../utils/textTranslate';
+import { textTranslate } from '../../utils';
 
 export const FavoriteList = () => {
   const { currentUser, sessionId } = useAuthContext();
+
   const { language, setFavoriteMoviesIds, favoriteMoviesIds, setParentPage } = useAppContext();
+
   const [favoriteMovies, setFavoriteMovies] = useState<NowPlayingType>();
+
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   useEffect(() => {
@@ -83,7 +78,7 @@ const styles = StyleSheet.create({
   favoriteListContainer: {
     flex: 1,
     backgroundColor: THEME.DARK,
-    width: Dimensions.get('screen').width,
+    width: DEVICE_WIDTH,
   },
   notFoundText: {
     color: THEME.TEXT,

@@ -7,29 +7,27 @@ import { SearchMovies } from './SearchMovies';
 
 const Stack = createNativeStackNavigator<NestedAllMoviesType>();
 
-export const SearchMoviesNested = () => {
-  return (
-    <Stack.Navigator initialRouteName={'SearchMoviesList'}>
-      <Stack.Screen
-        name="SearchMoviesList"
-        component={SearchMovies}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="AllSingleMovie"
-        component={SingleMovie}
-        options={({ route }) => ({
-          title: route?.params?.name,
-          headerTitleAlign: 'center',
-          headerStyle: { backgroundColor: THEME.LIGHT_DARK },
-          headerTintColor: THEME.TEXT,
-          headerTitle: () => (
-            <Text style={{ width: 300, color: THEME.TEXT }}>{route.params.name}</Text>
-          ),
-        })}
-      />
-    </Stack.Navigator>
-  );
-};
+export const SearchMoviesNested = () => (
+  <Stack.Navigator initialRouteName={'SearchMoviesList'}>
+    <Stack.Screen
+      name="SearchMoviesList"
+      component={SearchMovies}
+      options={{
+        headerShown: false,
+      }}
+    />
+    <Stack.Screen
+      name="AllSingleMovie"
+      component={SingleMovie}
+      options={({ route }) => ({
+        title: route?.params?.name,
+        headerTitleAlign: 'center',
+        headerStyle: { backgroundColor: THEME.LIGHT_DARK },
+        headerTintColor: THEME.TEXT,
+        headerTitle: () => (
+          <Text style={{ width: 300, color: THEME.TEXT }}>{route.params.name}</Text>
+        ),
+      })}
+    />
+  </Stack.Navigator>
+);

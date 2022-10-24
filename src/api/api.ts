@@ -1,7 +1,5 @@
+import { api_key, BASE_URL } from '../constants';
 import { SortType } from '../types/types';
-
-export const api_key = '365da808b8c3c4b7a04da7eca0d9524e';
-const BASE_URL = 'https://api.themoviedb.org/3/';
 
 export const API = {
   getCurrentUser(session_id: string) {

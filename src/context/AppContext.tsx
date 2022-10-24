@@ -11,8 +11,11 @@ const useAppContext = () => {
 
 const AppProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<'en-US' | 'ru-RUS'>('en-US');
+
   const [isLoading, setIsLoading] = useState(false);
+
   const [favoriteMoviesIds, setFavoriteMoviesIds] = useState<Array<number>>([]);
+
   const [parentPage, setParentPage] = useState<'NowPlaying' | 'Favorite' | 'SearchMovies'>(
     'NowPlaying'
   );
