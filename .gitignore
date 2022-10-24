@@ -9,9 +9,11 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+.xml
+.lock
+.idea
 
 # macOS
 .DS_Store
 
 /envoirment
-.env
