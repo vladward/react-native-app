@@ -12,7 +12,7 @@ import { textTranslate } from '../../utils';
 export const FavoriteList = () => {
   const { currentUser, sessionId } = useAuthContext();
 
-  const { language, setFavoriteMoviesIds, favoriteMoviesIds, setParentPage } = useAppContext();
+  const { language, setFavoriteMoviesIds, setParentPage } = useAppContext();
 
   const [favoriteMovies, setFavoriteMovies] = useState<NowPlayingType>();
 
@@ -25,7 +25,7 @@ export const FavoriteList = () => {
         setFavoriteMoviesIds(data?.results?.map((movie: MovieType) => movie.id));
       }
     );
-  }, [currentPage, language, favoriteMoviesIds]);
+  }, [currentPage, language]);
 
   const render: ListRenderItem<NowPlayingResultsType> = ({ item }) => {
     return <FavoriteMovieCard item={item} setParentPage={setParentPage} />;
